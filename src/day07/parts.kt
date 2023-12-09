@@ -22,13 +22,12 @@ open class CalcStrength {
 
   open fun hand(hand: String): Int {
     with(hand.groupingBy { it }.eachCount().values.sortedDescending()) {
-      return when {
-        get(0) == 5 -> 6
-        get(0) == 4 -> 5
-        get(0) == 3 && get(1) == 2 -> 4
-        get(0) == 3 && get(1) != 2 -> 3
-        get(0) == 2 && get(1) == 2 -> 2
-        get(0) == 2 && get(1) != 2 -> 1
+      fun second() = get(1)
+      return when (first()) {
+        5 -> 6
+        4 -> 5
+        3 -> if (second() == 2) 4 else 3
+        2 -> if (second() == 2) 2 else 1
         else -> 0
       }
     }
